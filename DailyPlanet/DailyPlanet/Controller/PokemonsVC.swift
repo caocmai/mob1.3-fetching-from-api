@@ -14,12 +14,14 @@ class PokemonsVC: UIViewController {
     
     let table = UITableView()
     var pokemons = [Pokemon]()
-    var nextTenURLS : String? = nil
+    var nextTenURL : String? = nil
     var pokemonImage : String? = nil
+    let pokemonsURL = "https://pokeapi.co/api/v2/pokemon?limit=10"
+//    let pokemonOffsetURL = "&offset=10"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchPokemonList(url: "https://pokeapi.co/api/v2/pokemon?limit=10&offset=10")
+        fetchPokemonList(url: "\(pokemonsURL)")
         
         //        fetchHeaderData()
         
@@ -90,7 +92,7 @@ class PokemonsVC: UIViewController {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let pokemons = try decoder.decode(PokemonList.self, from: data!)
-                    //                    print(pokemons)
+                    print(pokemons)
                     self.pokemons.append(contentsOf: pokemons.results)
                     
                     DispatchQueue.main.async {
@@ -98,7 +100,7 @@ class PokemonsVC: UIViewController {
                     }
                     //                    print(self.pokemons)
                     //                    print(pokemons.results[0].name)
-                    self.nextTenURLS = pokemons.next!
+                    self.nextTenURL = pokemons.next!
                     
                 } catch {
                     print("JSON error: \(error.localizedDescription)")
@@ -120,7 +122,7 @@ class PokemonsVC: UIViewController {
             //TODO: Create Request here
             let request = URLRequest(url: url)
             
-            print(url)
+//            print(url)
             // Create Data Task...
             let dataTask = defaultSession.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
                 
@@ -134,17 +136,15 @@ class PokemonsVC: UIViewController {
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let pokemonImage = try decoder.decode(GetPokemonImage.self, from: data!)
                     self.pokemonImage = pokemonImage.sprites.frontDefault
-                    print(self.pokemonImage!)
+//                    print(self.pokemonImage!)
                     
                     DispatchQueue.main.async {
-                        let newVC = PokemonImageVC()
+                        let pokemonImageViewController = PokemonImageVC()
                         
-                        newVC.imageURL = self.pokemonImage!
+                        pokemonImageViewController.imageURL = self.pokemonImage!
                         
-                        self.present(newVC, animated: true, completion: nil)
+                        self.present(pokemonImageViewController, animated: true, completion: nil)
                         
-                        
-                        print("selected")
                     }
                     
                     
@@ -188,7 +188,7 @@ extension PokemonsVC: UITableViewDataSource, UITableViewDelegate {
         if indexPath.section == tableView.numberOfSections - 1 &&
             indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             // Notify interested parties that end has been reached
-            fetchPokemonList(url: nextTenURLS!)
+            fetchPokemonList(url: "\(nextTenURL!)")
             print("end")
         }
     }

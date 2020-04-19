@@ -18,7 +18,6 @@ struct Pokemon : Codable{
     let url: String
 }
 
-
 struct GetPokemonImage: Codable {
     let sprites: Image
 }
