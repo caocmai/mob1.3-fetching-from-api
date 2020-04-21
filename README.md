@@ -19,5 +19,5 @@ Project code can be viewed locally  and run on Xcode's simulator by downloading/
 * [Xcode - 11.3.1](https://developer.apple.com/xcode/) - The IDE used
 * [Swift - 5.1.4](https://developer.apple.com/swift/) - Programming Language
 
-## Acknolegement 
-This project was adpated from the daily planet code which can be found at: https://github.com/VanderDev1/DailyPlanet
+## Acknowledgement 
+This project was adapted from the daily planet code which can be found at: https://github.com/VanderDev1/DailyPlanet
