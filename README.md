@@ -20,4 +20,4 @@ Project code can be viewed locally  and run on Xcode's simulator by downloading/
 * [Swift - 5.1.4](https://developer.apple.com/swift/) - Programming Language
 
 ## Acknowledgement 
-This project was adapted from the daily planet code which can be found at: https://github.com/VanderDev1/DailyPlanet
+This project was adapted from the daily planet tutorial which can be found at: https://github.com/VanderDev1/DailyPlanet
