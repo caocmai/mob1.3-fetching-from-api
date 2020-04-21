@@ -17,36 +17,38 @@ class PokemonImageVC: UIViewController {
         super.viewDidLoad()
         view.addSubview(imageView)
         view.backgroundColor = .systemGray
-//        setImage(from: imageURL!)
         fetchPokemonImage(url: imageURL!)
+        // If the image won't show up just the following function instead of fetchPokemonImage()
+//        fetchPokemonImageV2(from: imageURL!)
         setupImage()
     }
     
-//    func setImage(from url: String) {
-//        guard let imageURL = URL(string: url) else { return }
-//
-//            // just not to cause a deadlock in UI!
-//        DispatchQueue.global().async {
-//            guard let imageData = try? Data(contentsOf: imageURL) else { return }
-//
-//            let image = UIImage(data: imageData)
-//            print(image!)
-//            DispatchQueue.main.async {
-//                self.imageView.image = image
-//
-//            }
-//        }
-//    }
+    func fetchPokemonImageV2(from url: String) {
+        guard let imageURL = URL(string: url) else { return }
+
+            // just not to cause a deadlock in UI!
+        DispatchQueue.global().async {
+            guard let imageData = try? Data(contentsOf: imageURL) else { return }
+
+            let image = UIImage(data: imageData)
+            print(image!)
+            DispatchQueue.main.async {
+                self.imageView.image = image
+
+            }
+        }
+    }
 //
     // Or can just use this function
     func fetchPokemonImage(url: String) {
         
         //TODO: Create session configuration here
         let defaultSession = URLSession(configuration: .default)
-
+        print(url)
         
         //TODO: Create URL (...and send request and process response in closure...)
         if let url = URL(string: url) {
+            
             
            //TODO: Create Request here
             let request = URLRequest(url: url)
@@ -59,7 +61,6 @@ class PokemonImageVC: UIViewController {
                 if let data = data, let image = UIImage(data: data) {
                     DispatchQueue.main.async {
                         self.imageView.image = image
-                          //TODO: Insert downloaded image into imageView
                     }
                 }
             })

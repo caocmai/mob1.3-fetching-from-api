@@ -15,17 +15,14 @@ class PokemonsVC: UIViewController {
     let table = UITableView()
     var pokemons = [Pokemon]()
     var nextTenURL : String? = nil
-    var pokemonImage : String? = nil
+    var pokemonImageURL : String? = nil
     let pokemonsURL = "https://pokeapi.co/api/v2/pokemon?limit=10"
 //    let pokemonOffsetURL = "&offset=10"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchPokemonList(url: "\(pokemonsURL)")
-        
-        //        fetchHeaderData()
-        
-        //TODO: Call function to fetch image data here
+                
         setUpTable()
         
         
@@ -46,26 +43,6 @@ class PokemonsVC: UIViewController {
     }
     
     //MARK: Data Fetch functions
-    
-    func fetchHeaderData() {
-        
-        let defaultSession = URLSession(configuration: .default)
-        
-        // Create URL
-        let url = URL(string: "https://httpbin.org/headers")
-        
-        // Create Request
-        let request = URLRequest(url: url!)
-        
-        // Create Data Task
-        let dataTask = defaultSession.dataTask(with: request, completionHandler: { (data, response, error) -> Void in
-            
-            //            print("data is: ", data!)
-            //            print("response is: ", response!)
-            
-        })
-        dataTask.resume()
-    }
     
     // CODE BASE for In-Class Activity I
     func fetchPokemonList(url: String) {
@@ -92,7 +69,7 @@ class PokemonsVC: UIViewController {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let pokemons = try decoder.decode(PokemonList.self, from: data!)
-                    print(pokemons)
+//                    print(pokemons)
                     self.pokemons.append(contentsOf: pokemons.results)
                     
                     DispatchQueue.main.async {
@@ -135,13 +112,13 @@ class PokemonsVC: UIViewController {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let pokemonImage = try decoder.decode(GetPokemonImage.self, from: data!)
-                    self.pokemonImage = pokemonImage.sprites.frontDefault
+                    self.pokemonImageURL = pokemonImage.sprites.frontDefault
 //                    print(self.pokemonImage!)
                     
                     DispatchQueue.main.async {
                         let pokemonImageViewController = PokemonImageVC()
                         
-                        pokemonImageViewController.imageURL = self.pokemonImage!
+                        pokemonImageViewController.imageURL = self.pokemonImageURL!
                         
                         self.present(pokemonImageViewController, animated: true, completion: nil)
                         
@@ -185,6 +162,7 @@ extension PokemonsVC: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
         if indexPath.section == tableView.numberOfSections - 1 &&
             indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
             // Notify interested parties that end has been reached
