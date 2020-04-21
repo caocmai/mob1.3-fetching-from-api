@@ -9,9 +9,7 @@
 import UIKit
 
 class PokemonsVC: UIViewController {
-    
-    @IBOutlet weak var nasaDailyImageView: UIImageView!
-    
+        
     let table = UITableView()
     var pokemons = [Pokemon]()
     var nextTenURL : String? = nil

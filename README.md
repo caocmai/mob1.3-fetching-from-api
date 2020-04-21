@@ -14,7 +14,10 @@ The purpose of this exercise is to learn about fetching and parsing content from
 ### Run Locally
 Project code can be viewed locally  and run on Xcode's simulator by downloading/cloning this repo.
 
+
 ## Built With
 * [Xcode - 11.3.1](https://developer.apple.com/xcode/) - The IDE used
 * [Swift - 5.1.4](https://developer.apple.com/swift/) - Programming Language
 
+## Acknolegement 
+This project was adpated from the daily planet code which can be found at: https://github.com/VanderDev1/DailyPlanet
